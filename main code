@@ -1,0 +1,93 @@
+from tkinter import *
+import requests
+from geopy.geocoders import Nominatim
+from timezonefinder import TimezoneFinder
+from datetime import *
+import pytz
+
+def getweather():
+    try:
+        api_key = 'YOUR_API_KEY'  # Replace with your OpenWeatherMap API key
+        city = e1.get()
+
+        geolocator = Nominatim(user_agent="gecapiExercises")
+        location = geolocator.geocode(city)
+
+        obj = TimezoneFinder()
+        result = obj.timezone_at(lng=location.longitude, lat=location.latitude)
+        tz = pytz.timezone(result)
+
+        current_time = datetime.now(tz).strftime("%H:%M:%S")
+        c.config(text=current_time)
+
+        weather_data = requests.get(f'http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}').json()
+
+        main = weather_data['weather'][0]['main']
+        desc = weather_data['weather'][0]['description']
+        pressure = weather_data['main']['pressure']
+        wind_speed = weather_data['wind']['speed']
+        temperature = weather_data['main']['temp'] - 273.15
+        humidity = weather_data['main']['humidity']
+
+        error.config(text="")
+        e2.config(text=main)
+        e3.config(text=desc)
+        e4.config(text=pressure)
+        e5.config(text=wind_speed)
+        e6.config(text=f"{temperature:.2f}°C")
+        e7.config(text=humidity)
+
+    except:
+        error.config(text="Invalid City")
+
+root = Tk()
+root.title("Weather App")
+root.configure(bg='lightblue')
+root.resizable(True, True)
+
+Label(root, text="City: ").grid(row=0, column=0)
+e1 = Entry(root)
+e1.grid(row=0, column=1)
+
+Button(root, text="Get Weather", command=getweather).grid(row=0, column=2)
+
+geolocator = Nominatim(user_agent="gecapiExercises")
+location = geolocator.geocode("home")
+obj = TimezoneFinder()
+result = obj.timezone_at(lng=location.longitude, lat=location.latitude)
+tz = pytz.timezone(result)
+current_time = datetime.now(tz).strftime("%H:%M:%S")
+
+Label(root, text="Current Time: ").grid(row=1, column=1)
+c = Label(root, text="")
+c.grid(row=2, column=1)
+c.config(text=current_time)
+
+Label(root, text="Weather: ").grid(row=1, column=2)
+e2 = Label(root, text="")
+e2.grid(row=2, column=2)
+
+Label(root, text="Description: ").grid(row=1, column=3)
+e3 = Label(root, text="")
+e3.grid(row=2, column=3)
+
+Label(root, text="Pressure: ").grid(row=1, column=4)
+e4 = Label(root, text="")
+e4.grid(row=2, column=4)
+
+Label(root, text="Wind Speed: ").grid(row=1, column=5)
+e5 = Label(root, text="")
+e5.grid(row=2, column=5)
+
+Label(root, text="Temperature: ").grid(row=1, column=6)
+e6 = Label(root, text="")
+e6.grid(row=2, column=6)
+
+Label(root, text="Humidity: ").grid(row=1, column=7)
+e7 = Label(root, text="")
+e7.grid(row=2, column=7)
+
+error = Label(root, text="", fg="red")
+error.grid(row=0, column=3)
+
+root.mainloop()
