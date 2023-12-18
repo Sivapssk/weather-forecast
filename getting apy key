@@ -1,0 +1,19 @@
+1.Go to the OpenWeatherMap website: https://openweathermap.org/.
+Click on the "Sign Up" button to create a new account.
+Fill in the required information to create your account.
+2.Verify Your Email:
+
+After creating your account, you'll receive a verification email. Check your email inbox and click on the verification link to activate your account.
+Log in to Your OpenWeatherMap Account:
+
+Once your account is verified, log in to the OpenWeatherMap website using your credentials.
+3.Generate API Key:
+
+After logging in, go to the "API keys" section. You can usually find it in the user dashboard or under your account settings.
+4.Create a New API Key:
+
+Click on the button to generate a new API key.
+Optionally, you may need to provide some additional information or agree to terms and conditions.
+5.Copy Your API Key:
+
+Once your API key is generated, it will be displayed on the screen. Copy the API key to your clipboard.
